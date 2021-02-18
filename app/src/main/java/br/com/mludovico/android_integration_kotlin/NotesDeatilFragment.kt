@@ -52,6 +52,8 @@ class NotesDeatilFragment: DialogFragment(), DialogInterface.OnClickListener {
     }
 
     override fun onClick(dialog: DialogInterface?, which: Int) {
+        if(which == -2)
+            return
         val values = ContentValues()
         values.put(TITLE_NOTES, note_edit_title.text.toString())
         values.put(DESCRIPTION_NOTES, note_edit_description.text.toString())
