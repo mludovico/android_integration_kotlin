@@ -32,7 +32,7 @@ class NotesProvider : ContentProvider() {
     override fun delete(uri: Uri, selection: String?, selectionArgs: Array<String>?): Int {
         if (mUriMatcher.match(uri) == NOTES_BY_ID) {
             val db: SQLiteDatabase = dbHelper.writableDatabase
-            val linesAffected = db.delete(TABLE_NOTES, "$_ID", arrayOf(uri.lastPathSegment))
+            val linesAffected = db.delete(TABLE_NOTES, "$_ID = ?", arrayOf(uri.lastPathSegment))
             db.close()
             context?.contentResolver?.notifyChange(uri, null)
             return linesAffected
