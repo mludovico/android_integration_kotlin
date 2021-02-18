@@ -6,6 +6,7 @@ import android.content.ContentValues
 import android.content.DialogInterface
 import android.net.Uri
 import android.os.Bundle
+import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import br.com.mludovico.android_integration_kotlin.database.NotesDatabaseHelper.Companion.DESCRIPTION_NOTES
@@ -16,6 +17,8 @@ import kotlinx.android.synthetic.main.note_detail.*
 class NotesDeatilFragment: DialogFragment(), DialogInterface.OnClickListener {
 
     private var id: Long = 0
+    lateinit var titleEdit: EditText
+    lateinit var descriptionEdit: EditText
 
     companion object {
         private const val EXTRA_ID = "id"
@@ -31,6 +34,8 @@ class NotesDeatilFragment: DialogFragment(), DialogInterface.OnClickListener {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val view = activity?.layoutInflater?.inflate(R.layout.note_detail, null)
+        titleEdit = view!!.findViewById(R.id.note_edit_title)
+        descriptionEdit = view!!.findViewById(R.id.note_edit_description)
         var newNote = true
         if (arguments != null && arguments?.getLong(EXTRA_ID) != 0L) {
             id = arguments?.getLong(EXTRA_ID) as Long
@@ -38,8 +43,8 @@ class NotesDeatilFragment: DialogFragment(), DialogInterface.OnClickListener {
             val cursor = activity?.contentResolver?.query(uri, null, null, null, null)
             if (cursor?.moveToNext() as Boolean) {
                 newNote = false
-                note_edit_title.setText(cursor.getColumnIndex(TITLE_NOTES))
-                note_edit_description.setText(cursor.getColumnIndex(DESCRIPTION_NOTES))
+                titleEdit.setText(cursor.getString(cursor.getColumnIndex(TITLE_NOTES)))
+                descriptionEdit.setText(cursor.getString(cursor.getColumnIndex(DESCRIPTION_NOTES)))
             }
             cursor.close()
         }
@@ -55,8 +60,8 @@ class NotesDeatilFragment: DialogFragment(), DialogInterface.OnClickListener {
         if(which == -2)
             return
         val values = ContentValues()
-        values.put(TITLE_NOTES, note_edit_title.text.toString())
-        values.put(DESCRIPTION_NOTES, note_edit_description.text.toString())
+        values.put(TITLE_NOTES, titleEdit.text.toString())
+        values.put(DESCRIPTION_NOTES, descriptionEdit.text.toString())
 
         if (id != 0L) {
             val uri = Uri.withAppendedPath(URI_NOTES, id.toString())
