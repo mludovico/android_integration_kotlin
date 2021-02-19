@@ -18,11 +18,11 @@ class NotesAdapter(private val listener: NoteClieckedListener): RecyclerView.Ada
 
     override fun onBindViewHolder(holder: NotesViewHolder, position: Int) {
         cursor?.moveToPosition(position)
-        holder.noteTitle.text = cursor?.getString(cursor?.getColumnIndex(TITLE_NOTES) as Int)
-        holder.noteDescription.text = cursor?.getString(cursor?.getColumnIndex(DESCRIPTION_NOTES) as Int)
-        holder.noteButtonRemove.setOnClickListener {
+        holder.itemView.note_title.text = cursor?.getString(cursor?.getColumnIndex(TITLE_NOTES) as Int)
+        holder.itemView.note_description.text = cursor?.getString(cursor?.getColumnIndex(DESCRIPTION_NOTES) as Int)
+        holder.itemView.note_button_remove.setOnClickListener {
             cursor?.moveToPosition(position)
-            listener.noteremovedItem(cursor)
+            listener.noteRemovedItem(cursor)
             notifyDataSetChanged()
         }
         holder.itemView.setOnClickListener { listener.noteClieckedItem(cursor as Cursor) }
@@ -36,8 +36,4 @@ class NotesAdapter(private val listener: NoteClieckedListener): RecyclerView.Ada
     }
 }
 
-class NotesViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
-    val noteTitle = itemView.note_title
-    val noteDescription = itemView.note_description
-    val noteButtonRemove = itemView.note_button_remove
-}
+class NotesViewHolder(itemView: View): RecyclerView.ViewHolder(itemView)

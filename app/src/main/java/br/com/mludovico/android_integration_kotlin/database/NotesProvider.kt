@@ -105,8 +105,8 @@ class NotesProvider : ContentProvider() {
 
     companion object {
         const val AUTHORITY = "br.com.mludovico.android_integration_kotlin.provider"
-        val BASE_URI = Uri.parse("content://$AUTHORITY")
-        val URI_NOTES = Uri.withAppendedPath(BASE_URI, "notes")
+        val BASE_URI: Uri = Uri.parse("content://$AUTHORITY")
+        val URI_NOTES: Uri = Uri.withAppendedPath(BASE_URI, "notes")
 
         const val NOTES = 1
         const val NOTES_BY_ID = 2

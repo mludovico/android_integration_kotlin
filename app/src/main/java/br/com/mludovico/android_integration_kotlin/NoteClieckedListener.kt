@@ -5,6 +5,6 @@ import android.database.Cursor
 interface NoteClieckedListener {
 
     fun noteClieckedItem(cursor: Cursor)
-    fun noteremovedItem(cursor: Cursor?)
+    fun noteRemovedItem(cursor: Cursor?)
 
 }

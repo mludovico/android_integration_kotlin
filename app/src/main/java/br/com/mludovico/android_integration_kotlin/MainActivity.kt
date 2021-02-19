@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity(), LoaderManager.LoaderCallbacks<Cursor> 
                 fragment.show(supportFragmentManager, "dialog")
             }
 
-            override fun noteremovedItem(cursor: Cursor?) {
+            override fun noteRemovedItem(cursor: Cursor?) {
                 val id = cursor?.getLong(cursor.getColumnIndex(_ID))
                 contentResolver.delete(Uri.withAppendedPath(URI_NOTES, id.toString()), null, null)
             }
